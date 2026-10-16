@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HeadsetAutoSwitch</title>
-<meta name="description" content="Turn your wireless headset off and Windows switches to your speakers. Turn it on and it switches back. A 50 KB background app.">
+<meta name="description" content="Turn your wireless headset off and Windows switches to your speakers. Turn it on and it switches back. A tiny background app for SteelSeries, Logitech, Corsair, HyperX and other dongle headsets.">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <meta property="og:title" content="HeadsetAutoSwitch">
 <meta property="og:description" content="Auto-switch Windows audio when your wireless headset turns off and on.">
@@ -145,6 +145,7 @@
     <a class="brand" href="#"><img src="icon.svg" alt="">HeadsetAutoSwitch</a>
     <div class="links">
       <a class="hide-sm" href="#how">How it works</a>
+      <a class="hide-sm" href="#supported">Headsets</a>
       <a class="hide-sm" href="#install">Install</a>
       <a href="https://github.com/bahaa-b7a/HeadsetAutoSwitch">GitHub</a>
     </div>
@@ -164,7 +165,7 @@
         View source
       </a>
     </div>
-    <div class="meta">Windows 10 / 11 · ~50 KB · free &amp; open source</div>
+    <div class="meta">Windows 10 / 11 · ~90 KB · free &amp; open source</div>
 
     <div class="demo" aria-label="Interactive demo">
       <div class="demo-row">
@@ -190,7 +191,9 @@
   <section>
     <h2>Small on purpose</h2>
     <div class="grid">
-      <div class="card"><div class="ico">🪶</div><h3>Featherweight</h3><p>One 50 KB exe using about 2 MB of RAM and next to no CPU.</p></div>
+      <div class="card"><div class="ico">🪶</div><h3>Featherweight</h3><p>One ~90 KB exe using about 4 MB of RAM and next to no CPU.</p></div>
+      <div class="card"><div class="ico">🎯</div><h3>Zero setup</h3><p>It finds your headset's audio device and your built-in speakers on its own, so there are no names to type.</p></div>
+      <div class="card"><div class="ico">↩️</div><h3>Puts things back</h3><p>It restores exactly what you were using before: Game/Chat outputs, NVIDIA Broadcast, Sonar and so on.</p></div>
       <div class="card"><div class="ico">📦</div><h3>Nothing to install</h3><p>No runtime, driver, admin rights or registry edits. Double-click and it's done.</p></div>
       <div class="card"><div class="ico">⚡</div><h3>Quick</h3><p>Switches within about 4 seconds of you pressing the power button.</p></div>
       <div class="card"><div class="ico">🤫</div><h3>Out of your way</h3><p>No window, no tray icon, no network. It only acts when the headset turns on or off.</p></div>
@@ -199,8 +202,8 @@
 
   <section id="how">
     <h2>Why Windows doesn't do this already</h2>
-    <p>Wireless headsets like the SteelSeries Arctis Nova 5 talk to a USB dongle. When you turn the headset off the dongle stays plugged in, so Windows still sees a working "headphones" device and keeps playing into it.</p>
-    <p>HeadsetAutoSwitch asks the dongle every two seconds whether the headset is actually connected, using the same status message SteelSeries' own software uses for the battery readout. When the answer changes, it sets the matching device as your default output.</p>
+    <p>Wireless headsets from SteelSeries, Logitech, Corsair, HyperX and others talk to a USB dongle. When you turn the headset off the dongle stays plugged in, so Windows still sees a working "headphones" device and keeps playing into it.</p>
+    <p>HeadsetAutoSwitch asks the dongle every two seconds whether the headset is actually connected, using the same status message the brand's own software uses for the battery readout. When the answer changes, it sets the matching device as your default output. Here's what that looks like for an Arctis Nova 5:</p>
 <pre><code>dongle  ◄── 00 B0             status request
         ──► 00 B0 02 ...      02 = headset off  → speakers
         ──► 00 B0 03 ...      03 = headset on   → headset</code></pre>
@@ -217,20 +220,36 @@
     <p class="note">To uninstall, press <b>Win + R</b> and run <code>%LOCALAPPDATA%\HeadsetAutoSwitch\HeadsetAutoSwitch.exe --uninstall</code></p>
   </section>
 
-  <section>
+  <section id="supported">
     <h2>Supported headsets</h2>
     <div class="table-wrap">
     <table>
-      <tr><th>Headset</th><th>USB ID</th><th>Status</th></tr>
-      <tr><td>SteelSeries Arctis Nova 5</td><td><code>1038:2232</code></td><td>✅ Tested</td></tr>
-      <tr><td>SteelSeries Arctis Nova 5X</td><td><code>1038:2253</code></td><td>Should work (same protocol)</td></tr>
+      <tr><th>Brand</th><th>Headsets</th><th>Status</th></tr>
+      <tr><td>SteelSeries</td><td>Arctis Nova 5 / 5X</td><td>✅ Tested</td></tr>
+      <tr><td>SteelSeries</td><td>Arctis Nova 7 / 7X / 7P, Nova 3P / 3X Wireless, Arctis 7+, Nova Pro Wireless, Arctis 1 / 7X / 7P Wireless, Arctis Pro Wireless</td><td>Built in</td></tr>
+      <tr><td>Logitech</td><td>G533, G535, G633, G635, G733, G933, G935, G PRO, G PRO X</td><td>Built in</td></tr>
+      <tr><td>Corsair</td><td>Void Wireless family, Virtuoso XT / SE</td><td>Built in</td></tr>
+      <tr><td>HyperX</td><td>Cloud Alpha Wireless</td><td>Built in</td></tr>
+      <tr><td>Bluetooth</td><td>Any headset, or any dongle whose audio device disappears when it's off</td><td>Automatic</td></tr>
+      <tr><td>Anything else</td><td>Any 2.4 GHz dongle headset</td><td><a href="#learn">Teach it</a></td></tr>
     </table>
     </div>
-    <p class="note">Bluetooth and wired headsets don't need this, because Windows already switches when they disconnect. If your dongle headset isn't listed, <a href="https://github.com/bahaa-b7a/HeadsetAutoSwitch/issues">open an issue</a>.</p>
+    <p class="note">"Built in" means the protocol is implemented from <a href="https://github.com/Sapd/HeadsetControl">HeadsetControl</a>'s documentation but hasn't been confirmed on real hardware yet. Tried one? <a href="https://github.com/bahaa-b7a/HeadsetAutoSwitch/issues">Tell us how it went</a>.</p>
+  </section>
+
+  <section id="learn">
+    <h2>Any other headset? Teach it in a minute</h2>
+    <p>If your headset isn't recognized, the installer offers to learn it. You can also run it any time with <code>HeadsetAutoSwitch.exe --learn</code>. You turn the headset off and back on once while it watches three things:</p>
+    <div class="grid">
+      <div class="card"><div class="ico">🔌</div><h3>Windows devices</h3><p>Does the headset's audio output appear and disappear?</p></div>
+      <div class="card"><div class="ico">❓</div><h3>Status requests</h3><p>It sends the read-only status queries known for your dongle's brand and compares the answers.</p></div>
+      <div class="card"><div class="ico">📣</div><h3>Dongle messages</h3><p>Many dongles announce "connected" and "disconnected" on their own. It catches those.</p></div>
+    </div>
+    <p class="note">It keeps whichever signal cleanly separates on from off, saves it, and starts using it. If none does, it writes a log you can attach to an issue so support can be added for everyone.</p>
   </section>
 
   <footer>
-    MIT licensed · Protocol thanks to <a href="https://github.com/Sapd/HeadsetControl">HeadsetControl</a> ·
+    Vibe coded with ❤️ by <a href="https://github.com/bahaa-b7a">bahaa-b7a</a> · MIT licensed · Protocol thanks to <a href="https://github.com/Sapd/HeadsetControl">HeadsetControl</a> ·
     <a href="https://github.com/bahaa-b7a/HeadsetAutoSwitch">Source on GitHub</a>
   </footer>
 </div>
