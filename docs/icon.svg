@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8B7CFF"/>
+      <stop offset="1" stop-color="#5BC8F5"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="60" fill="url(#bg)"/>
+  <!-- head -->
+  <circle cx="128" cy="150" r="62" fill="#FFF6EC"/>
+  <!-- headband -->
+  <path d="M48.8 128.8 A82 82 0 0 1 207.2 128.8" fill="none" stroke="#2E2A45" stroke-width="18" stroke-linecap="round"/>
+  <!-- ear cups -->
+  <rect x="38" y="118" width="38" height="68" rx="17" fill="#2E2A45"/>
+  <rect x="180" y="118" width="38" height="68" rx="17" fill="#2E2A45"/>
+  <rect x="49" y="132" width="10" height="40" rx="5" fill="#FF9FB8"/>
+  <rect x="197" y="132" width="10" height="40" rx="5" fill="#FF9FB8"/>
+  <!-- face -->
+  <circle cx="106" cy="148" r="8.5" fill="#2E2A45"/>
+  <circle cx="150" cy="148" r="8.5" fill="#2E2A45"/>
+  <circle cx="108.5" cy="145.5" r="2.6" fill="#FFFFFF"/>
+  <circle cx="152.5" cy="145.5" r="2.6" fill="#FFFFFF"/>
+  <ellipse cx="93" cy="168" rx="11" ry="6.5" fill="#FF9FB8" opacity="0.85"/>
+  <ellipse cx="163" cy="168" rx="11" ry="6.5" fill="#FF9FB8" opacity="0.85"/>
+  <path d="M119 166 Q128 175 137 166" fill="none" stroke="#2E2A45" stroke-width="5" stroke-linecap="round"/>
+</svg>
