@@ -467,7 +467,7 @@ class Switcher
 
         if (s == state)
         {
-            if (s == 1) for (int role = 0; role < 3; role++) { var d = Audio.GetDefault(role); if (d != null) saved[role] = d; }
+            if (s == 1) { var heads = HeadsetIds(); for (int role = 0; role < 3; role++) Remember(role, heads); }
             else { var d = Audio.GetDefault(0); if (d != null && !HeadsetIds().Contains(d)) offPref = d; }
             return;
         }
@@ -490,13 +490,26 @@ class Switcher
         return ids;
     }
 
+    // Only the headset's own outputs, or a virtual device routing into it (NVIDIA Broadcast, Sonar...),
+    // are worth restoring when the headset comes back. Never the speakers we switched to.
+    static bool Restorable(string id, List<string> heads)
+    {
+        return id != null && (heads.Contains(id) || Audio.IsVirtual(Audio.Name(id)));
+    }
+
+    void Remember(int role, List<string> heads)
+    {
+        var d = Audio.GetDefault(role);
+        if (Restorable(d, heads)) saved[role] = d;
+    }
+
     void GoOff(bool initial)
     {
         var heads = HeadsetIds();
         string cur = Audio.GetDefault(0);
         if (initial)
         {
-            for (int role = 0; role < 3; role++) saved[role] = Audio.GetDefault(role);
+            for (int role = 0; role < 3; role++) Remember(role, heads);
             if (cur != null && !heads.Contains(cur)) { Program.Log("headset OFF at start; output already not the headset"); return; }
         }
         var fb = PickFallback(heads);
@@ -520,7 +533,8 @@ class Switcher
         string log = null;
         for (int role = 0; role < 3; role++)
         {
-            string target = saved[role] != null && active.Exists(e => e.Id == saved[role]) ? saved[role] : best;
+            string s = saved[role];
+            string target = s != null && active.Exists(e => e.Id == s) && Restorable(s, heads) ? s : best;
             Audio.SetDefault(target, role);
             if (role == 0) log = Audio.Name(target);
         }
